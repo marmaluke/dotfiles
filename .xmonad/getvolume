@@ -1,0 +1,3 @@
+#!/bin/bash
+
+amixer get Master | grep Mono: | awk -F'[][]' '{if ($6 == "off") {print "MUT"} else {print$2}}'
