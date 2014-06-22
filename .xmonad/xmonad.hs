@@ -7,10 +7,13 @@ import XMonad.Util.EZConfig(additionalKeys)
 import Graphics.X11.ExtraTypes.XF86
 import System.IO
 
+myWorkspaces = ["1:main", "2", "3:IK", "4", "5", "6", "7", "8", "9"]
+
 main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ defaultConfig
-        { manageHook  = manageDocks <+> manageHook defaultConfig
+        { workspaces  = myWorkspaces
+        , manageHook  = manageDocks <+> manageHook defaultConfig
         , layoutHook  = avoidStruts  $  layoutHook defaultConfig
         , startupHook = do
             setWMName "LG3D"
@@ -22,7 +25,7 @@ main = do
         , modMask     = mod4Mask
         , terminal    = "konsole"
         } `additionalKeys`
-            [ ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume 0 -- -2%")
-            , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume 0 +2%")
+            [ ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume 0 -- -4%")
+            , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume 0 +4%")
             , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute 0 toggle")
             ]
