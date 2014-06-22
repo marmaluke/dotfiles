@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Layout.Column
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -9,12 +10,16 @@ import System.IO
 
 myWorkspaces = ["1:main", "2", "3:IK", "4", "5", "6", "7", "8", "9"]
 
+myLayouts = tiled ||| Mirror tiled ||| Mirror (Column 1.0) ||| Full
+    where
+        tiled = Tall 1 0.02 0.5
+
 main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ defaultConfig
         { workspaces  = myWorkspaces
         , manageHook  = manageDocks <+> manageHook defaultConfig
-        , layoutHook  = avoidStruts  $  layoutHook defaultConfig
+        , layoutHook  = avoidStruts  $ myLayouts 
         , startupHook = do
             setWMName "LG3D"
             spawn "~/.xmonad/autostart"
